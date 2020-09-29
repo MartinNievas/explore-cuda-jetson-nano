@@ -1,6 +1,10 @@
-# hello
+# vector addition
 
-Hello from different CUDA threads and blocks
+Vector addition kernels
+- block
+- block managed
+- thread
+- block and thread
 
 ## How to compile
 ```bash
