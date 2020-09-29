@@ -2,6 +2,7 @@
 
 Vector addition kernels
 - soa
+- soa_local
 - aos
 
 ## How to compile

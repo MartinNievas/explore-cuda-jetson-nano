@@ -5,6 +5,7 @@ find_package(CUDA REQUIRED)
 
 set(CUDA_PROGRAM_LIST
   soa;
+  soa_local;
   aos;
   )
 
