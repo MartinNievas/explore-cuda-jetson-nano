@@ -6,3 +6,5 @@ Hello from different CUDA threads and blocks
 ```bash
 $ sh compile.sh
 ```
+
+Executables are generated under: `build/bin/`

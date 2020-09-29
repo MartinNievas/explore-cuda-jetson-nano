@@ -10,3 +10,5 @@ Vector addition kernels
 ```bash
 $ sh compile.sh
 ```
+
+Executables are generated under: `build/bin/`
