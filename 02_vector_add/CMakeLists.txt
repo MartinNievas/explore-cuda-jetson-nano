@@ -3,7 +3,13 @@ cmake_minimum_required(VERSION 3.8) # CUDA language support
 project(template LANGUAGES C CXX CUDA)
 find_package(CUDA REQUIRED)
 
-set(CUDA_PROGRAM_LIST vector_addition_gpu_block_only;vector_addition_gpu_block_only_man;vector_addition_gpu_thread_block)
+set(CUDA_PROGRAM_LIST
+  vector_addition_gpu_block_only;
+  vector_addition_gpu_block_only_man;
+  vector_addition_gpu_thread_only;
+  vector_addition_gpu_thread_block;
+  vector_addition_gpu_thread_block_man
+  )
 
 set(GCC_FLAGS "-lgomp")
 SET(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${GCC_FLAGS}")
