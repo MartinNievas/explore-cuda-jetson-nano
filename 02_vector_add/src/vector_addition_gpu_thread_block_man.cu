@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <assert.h>
+#include "helper_cuda.h"
 
 #define N 1024
 
@@ -44,10 +45,14 @@ int main(void) {
   cudaMallocManaged((void **)&c, size);
 
   fill_array<<<div_round_up(N,threads_per_block),threads_per_block>>>(a);
+  getLastCudaError("fill_array() kernel failed");
   fill_array<<<div_round_up(N,threads_per_block),threads_per_block>>>(b);
+  getLastCudaError("fill_array() kernel failed");
   device_add<<<div_round_up(N,threads_per_block),threads_per_block>>>(a,b,c);
+  getLastCudaError("device_add() kernel failed");
 
   check_addition<<<div_round_up(N,threads_per_block),threads_per_block>>>(a,b,c);
+  getLastCudaError("check_addition() kernel failed");
 
   cudaFree(a); cudaFree(b); cudaFree(c);
 

@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include <assert.h>
+#include<assert.h>
+#include "helper_cuda.h"
 
 #define N 1024
 
@@ -44,6 +45,7 @@ int main(void) {
 
 
   device_add<<<N,1>>>(d_a,d_b,d_c);
+  getLastCudaError("device_addevice_add() kernel failed");
 
   // Copy result back to host
   cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
