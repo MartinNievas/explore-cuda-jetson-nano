@@ -54,6 +54,37 @@ void matrix_transpose_shared(int * const __restrict__ input, int * const __restr
   output[transposedIndex] = sharedMemory[localIndexY][localIndexX];
 }
 
+__global__
+void matrix_transpose_shared_non_conflict(int * const __restrict__ input, int * const __restrict__ output) {
+
+  __shared__ int sharedMemory [BLOCK_SIZE] [BLOCK_SIZE+1];
+  // [1 ] [2 ] [3 ] ... [29] [30] [31] [32]
+
+  // now 1 && 33 non bank conflict
+  // [33] [34] [35] ... [61] [62] [63]
+
+  // before 1&&32 bank conflict
+  // [32] [33] [34] ... [60] [61] [62]
+
+  int indexX = threadIdx.x + blockIdx.x * blockDim.x;
+  int indexY = threadIdx.y + blockIdx.y * blockDim.y;
+
+  int tindexX = threadIdx.x + blockIdx.y * blockDim.x;
+  int tindexY = threadIdx.y + blockIdx.x * blockDim.y;
+
+  int localIndexX = threadIdx.x;
+  int localIndexY = threadIdx.y;
+
+  int index = indexY * N + indexX;
+  int transposedIndex = tindexY * N + tindexX;
+
+  sharedMemory[localIndexX][localIndexY] = input[index];
+
+  __syncthreads();
+
+  output[transposedIndex] = sharedMemory[localIndexY][localIndexX];
+}
+
 template<typename T>
 T div_round_up(T a, T b) {
   return (a + b - 1) / b;
@@ -84,6 +115,9 @@ int main(void) {
   getLastCudaError("matrix_transpose_shared() kernel failed");
 
   // printf("b[0]: %d\n", a[0]);
+
+  matrix_transpose_shared_non_conflict<<<gridSize,blockSize>>>(a,b);
+  getLastCudaError("matrix_transpose_shared_non_conflict() kernel failed");
 
   cudaFree(a);
   cudaFree(b);
