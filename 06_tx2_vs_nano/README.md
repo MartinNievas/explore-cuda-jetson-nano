@@ -11,11 +11,19 @@ $ sh compile.sh
 Executables are generated under: `build/bin/`
 
 
-## Compare
+## Compare (Avg time)
 
-|size|jetson nano | jetson tx2|
-|----|------------|-----------|
-| | | |
+|size|name|jetson nano | jetson tx2|
+|----|------------|-----------|---|
+|1L<<25|map4                  |28.724ms|16.250ms|
+|1L<<25|set                   |27.531ms|18.540ms|
+|1L<<25|cudaDeviceSynchronize |56.509ms|35.142ms|
+|1L<<25|cudaFree              |9.8398ms|12.589ms|
+|----|------------|-----------|---|
+|1L<<26|map4                  |57.188ms|31.611ms|
+|1L<<26|set                   |55.284ms|35.420ms|
+|1L<<26|cudaDeviceSynchronize |112.70ms|67.395ms|
+|1L<<26|cudaFree              |23.978ms|23.268ms|
 
 # Jetson Nano architecture
 
