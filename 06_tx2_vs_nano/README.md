@@ -61,6 +61,36 @@ Device 0: "NVIDIA Tegra X1"
      < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
 ```
 
+### BLOCK_SIZE 256
+
+```bash
+$ sudo /usr/local/cuda-10.2/bin/nvprof --unified-memory-profiling off  bin/ma4
+==3213== NVPROF is profiling process 3213, command: bin/ma4
+16843775, 16843776.000000!=65795.000000*255.000000+66050.000000
+==3213== Profiling application: bin/ma4
+```
+
+#### `define N (1L<<25)`
+|            Type | Time(%)|      Time|     Calls|       Avg|       Min|       Max|  Name|
+|---|---|---|---|---|---|---|---|
+| GPU activities:   |51.06%  |28.724ms         |1  |28.724ms  |28.724ms  |28.724ms  |ma4(float*, float*, float*, float*)|
+|                   |48.94%  |27.531ms         |1  |27.531ms  |27.531ms  |27.531ms  |set(float*, float*, float*, float*)|
+|      API calls:   |87.21%  |656.04ms         |4  |164.01ms  |82.187ms  |394.92ms  |cudaMallocManaged|
+|                   | 7.51%  |56.509ms         |1  |56.509ms  |56.509ms  |56.509ms  |cudaDeviceSynchronize|
+|                   | 5.23%  |39.359ms         |4  |9.8398ms  |9.1791ms  |11.067ms  |cudaFree|
+|                   | 0.03%  |209.47us         |2  |104.73us  |59.542us  |149.93us  |cudaLaunchKernel|
+
+#### `define N (1L<<26)`
+|            Type | Time(%)|      Time|     Calls|       Avg|       Min|       Max|  Name|
+|---|---|---|---|---|---|---|---|
+| GPU activities:   |50.85%  |57.188ms         |1  |57.188ms  |57.188ms  |57.188ms  |ma4(float*, float*, float*, float*)|
+|                   |49.15%  |55.284ms         |1  |55.284ms  |55.284ms  |55.284ms  |set(float*, float*, float*, float*)|
+|      API calls:   |80.81%  |880.17ms         |4  |220.04ms  |85.354ms  |489.17ms  |cudaMallocManaged|
+|                   |10.35%  |112.70ms         |1  |112.70ms  |112.70ms  |112.70ms  |cudaDeviceSynchronize|
+|                   | 8.81%  |95.910ms         |4  |23.978ms  |14.474ms  |32.765ms  |cudaFree|
+|                   | 0.02%  |215.47us         |2  |107.73us  |61.838us  |153.63us  |cudaLaunchKernel|
+
+
 # Jetson TX2 architecture
 
 ```bash
