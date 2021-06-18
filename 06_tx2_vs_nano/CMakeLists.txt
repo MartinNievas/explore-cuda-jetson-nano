@@ -5,6 +5,7 @@ find_package(CUDA REQUIRED)
 
 set(CUDA_PROGRAM_LIST
   ma4;
+  ma4_bad;
   )
 
 set(GCC_FLAGS "-lgomp")
