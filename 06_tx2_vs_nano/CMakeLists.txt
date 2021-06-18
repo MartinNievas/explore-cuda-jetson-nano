@@ -13,7 +13,7 @@ SET(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${GCC_FLAGS}")
 SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_FLAGS}")
 
 if(CUDA_FOUND)
-  list(APPEND CUDA_NVCC_FLAGS "-arch=sm_62;--compiler-options;-std=c++11;-O3;-DVERBOSE;-mcmodel=medium;-lgomp")
+  list(APPEND CUDA_NVCC_FLAGS "-arch=sm_53;--compiler-options;-std=c++11;-O3;-DVERBOSE;-mcmodel=medium;-lgomp")
 endif(CUDA_FOUND)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
