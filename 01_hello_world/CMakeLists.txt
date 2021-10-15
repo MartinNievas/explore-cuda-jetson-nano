@@ -23,7 +23,6 @@ set_target_properties(${MyProgram} PROPERTIES COMPILE_FLAGS "${GCC_FLAGS}")
 target_include_directories(${MyProgram} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(${MyProgram} PRIVATE "-lgomp")
 
-
 foreach(PROGR ${CUDA_PROGRAM_LIST})
   target_compile_options(${PROGR}
   PRIVATE $<$<COMPILE_LANGUAGE:CXX>:
